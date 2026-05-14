@@ -19,7 +19,7 @@ import { getToken } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8010'
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://ai-reviewer-backend-1glg.onrender.com'
 
 interface AuditLog {
   id: string

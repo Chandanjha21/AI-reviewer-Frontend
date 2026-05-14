@@ -31,7 +31,7 @@ type SignupPayload = {
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '') ||
-  'http://localhost:8010'
+  'https://ai-reviewer-backend-1glg.onrender.com'
 
 async function parseApiError(response: Response) {
   try {

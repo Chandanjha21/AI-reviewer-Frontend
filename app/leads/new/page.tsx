@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils'
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '') ||
-  'http://localhost:8010'
+  'https://ai-reviewer-backend-1glg.onrender.com'
 
 type LeadForm = {
   lead_name: string

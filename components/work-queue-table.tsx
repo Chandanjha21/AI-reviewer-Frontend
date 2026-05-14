@@ -9,7 +9,7 @@ import { WorkItemInfoBar } from './work-item-info-bar'
 import { cn } from '@/lib/utils'
 import { getToken } from '@/lib/auth'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8010'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://ai-reviewer-backend-1glg.onrender.com'
 
 async function readApiError(res: Response, fallback: string): Promise<string> {
   try {

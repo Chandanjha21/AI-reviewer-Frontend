@@ -22,7 +22,7 @@ import { DashboardLayout } from '@/components/dashboard-layout'
 import { KPICard } from '@/components/kpi-card'
 import { useAuth } from '@/components/auth/auth-provider'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8010'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://ai-reviewer-backend-1glg.onrender.com'
 
 interface WorkItem {
   id: string
@@ -301,7 +301,7 @@ export default function DashboardPage() {
         <section className="grid gap-4 md:grid-cols-3">
 
           {/* Avg confidence */}
-          <div className="rounded-lg border border-border bg-card p-5">
+          <div className="rounded-lg border border-border hover:border-primary/50 transition-colors bg-card p-5">
             <p className="text-sm font-medium text-muted-foreground mb-1">Avg AI Confidence</p>
             {loadingData ? (
               <div className="h-8 w-16 rounded bg-secondary/40 animate-pulse mt-2" />
@@ -321,14 +321,14 @@ export default function DashboardPage() {
           </div>
 
           {/* Total work items */}
-          <div className="rounded-lg border border-border bg-card p-5">
+          <div className="rounded-lg border border-border hover:border-primary/50 transition-colors bg-card p-5">
             <p className="text-sm font-medium text-muted-foreground mb-1">Total Work Items</p>
             <p className="text-3xl font-semibold mt-1">{loadingData ? '—' : workItems.length}</p>
             <p className="text-xs text-muted-foreground mt-1">Across all statuses</p>
           </div>
 
           {/* Team size */}
-          <div className="rounded-lg border border-border bg-card p-5">
+          <div className="rounded-lg border border-border hover:border-primary/50 transition-colors bg-card p-5">
             <p className="text-sm font-medium text-muted-foreground mb-1">Team Size</p>
             <p className="text-3xl font-semibold mt-1">{loadingData ? '—' : users.length}</p>
             <p className="text-xs text-muted-foreground mt-1">
