@@ -10,6 +10,7 @@ import {
   Mail,
   MessageSquareText,
   Phone,
+  RefreshCw,
   Tag,
   User,
 } from 'lucide-react'
@@ -20,7 +21,7 @@ import { cn } from '@/lib/utils'
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '') ||
-  'https://ai-reviewer-backend-1glg.onrender.com'
+  'https://ai-reviewer-backend-1.onrender.com'
 
 type LeadForm = {
   lead_name: string
@@ -244,9 +245,18 @@ export default function CreateLeadPage() {
               disabled={loading}
               className="flex h-11 w-full items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageSquareText className="h-4 w-4" />}
-              Create lead
-              {!loading ? <ArrowRight className="h-4 w-4" /> : null}
+              {loading ? (
+                <>
+                  <RefreshCw className="h-4 w-4 animate-spin" />
+                  Creating lead...
+                </>
+              ) : (
+                <>
+                  <MessageSquareText className="h-4 w-4" />
+                  Create lead
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
             </button>
           </aside>
         </form>

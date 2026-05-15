@@ -10,7 +10,7 @@ import {
 import { cn } from '@/lib/utils'
 import { getToken } from '@/lib/auth'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://ai-reviewer-backend-1glg.onrender.com'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://ai-reviewer-backend-1.onrender.com'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 

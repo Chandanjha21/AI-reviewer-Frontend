@@ -21,7 +21,7 @@ import { cn } from '@/lib/utils'
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '') ||
-  'https://ai-reviewer-backend-1glg.onrender.com'
+  'https://ai-reviewer-backend-1.onrender.com'
 
 type Customer = {
   id: string

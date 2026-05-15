@@ -8,7 +8,7 @@ import {
 import { cn } from '@/lib/utils'
 import { getToken } from '@/lib/auth'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://ai-reviewer-backend-1glg.onrender.com'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://ai-reviewer-backend-1.onrender.com'
 
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -73,7 +73,9 @@ export function WorkItemReviewOverlay({ initialCards, onClose }: WorkItemReviewO
   const [isAnimating, setIsAnimating] = useState(false)
   const [rejectNote, setRejectNote] = useState('')
   const [showRejectInput, setShowRejectInput] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [isApproving, setIsApproving] = useState(false)
+  const [isRejecting, setIsRejecting] = useState(false)
+  const loading = isApproving || isRejecting
   const [regenerating, setRegenerating] = useState(false)
   const [error, setError] = useState('')
   const editorRef = useRef<HTMLDivElement>(null)
@@ -115,7 +117,7 @@ export function WorkItemReviewOverlay({ initialCards, onClose }: WorkItemReviewO
 
   const handleApprove = async () => {
     if (!current || isAnimating || loading || regenerating) return
-    setLoading(true)
+    setIsApproving(true)
     setError('')
 
     const currentHtml = editorRef.current?.innerHTML ?? ''
@@ -130,7 +132,7 @@ export function WorkItemReviewOverlay({ initialCards, onClose }: WorkItemReviewO
       })
       if (!editRes.ok) {
         setError('Failed to save edits before approving.')
-        setLoading(false)
+        setIsApproving(false)
         return
       }
     }
@@ -139,7 +141,7 @@ export function WorkItemReviewOverlay({ initialCards, onClose }: WorkItemReviewO
       method: 'POST',
       headers: authHeaders(),
     })
-    setLoading(false)
+    setIsApproving(false)
     if (!res.ok) { setError('Failed to approve. Please try again.'); return }
     animateAndAdvance('right')
   }
@@ -148,14 +150,14 @@ export function WorkItemReviewOverlay({ initialCards, onClose }: WorkItemReviewO
     if (!current || isAnimating || loading || regenerating) return
     if (!showRejectInput) { setShowRejectInput(true); return }
     if (!rejectNote.trim()) { setError('Please enter a rejection note.'); return }
-    setLoading(true)
+    setIsRejecting(true)
     setError('')
     const res = await fetch(`${API_BASE_URL}/work-items/${current.workItem.id}/reject`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify({ reviewer_note: rejectNote }),
     })
-    setLoading(false)
+    setIsRejecting(false)
     if (!res.ok) { setError('Failed to reject. Please try again.'); return }
     animateAndAdvance('left')
   }
@@ -454,8 +456,17 @@ export function WorkItemReviewOverlay({ initialCards, onClose }: WorkItemReviewO
                 disabled={loading || regenerating || isAnimating}
                 className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg border border-border hover:bg-green-500/10 hover:border-green-500/40 hover:text-green-400 text-sm transition-all disabled:opacity-50"
               >
-                <Check size={15} />
-                Accept and send
+                {isApproving ? (
+                  <>
+                    <RefreshCw size={15} className="animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Check size={15} />
+                    Accept and send
+                  </>
+                )}
               </button>
               <button
                 onClick={handleReject}
@@ -467,8 +478,12 @@ export function WorkItemReviewOverlay({ initialCards, onClose }: WorkItemReviewO
                     : 'border-border hover:bg-destructive/10 hover:border-destructive/40 hover:text-destructive'
                 )}
               >
-                <XCircle size={15} />
-                {showRejectInput ? 'Confirm Reject' : 'Reject'}
+                {isRejecting ? (
+                  <RefreshCw size={15} className="animate-spin" />
+                ) : (
+                  <XCircle size={15} />
+                )}
+                {showRejectInput ? (isRejecting ? 'Rejecting...' : 'Confirm Reject') : 'Reject'}
               </button>
               {showRejectInput && (
                 <button

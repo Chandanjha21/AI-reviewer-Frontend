@@ -22,7 +22,7 @@ import { DashboardLayout } from '@/components/dashboard-layout'
 import { KPICard } from '@/components/kpi-card'
 import { useAuth } from '@/components/auth/auth-provider'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://ai-reviewer-backend-1glg.onrender.com'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://ai-reviewer-backend-1.onrender.com'
 
 interface WorkItem {
   id: string
